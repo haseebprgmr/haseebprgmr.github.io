@@ -1,6 +1,8 @@
 :root {
     --primary: #2c3e50;
     --secondary: #3498db;
+    --buy-color: #27ae60;
+    --sell-color: #c0392b;
     --background: #f8f9fa;
 }
 
@@ -115,10 +117,25 @@ input:focus, select:focus {
     gap: 1rem;
 }
 
-.currency-rate {
-    font-weight: 600;
-    color: var(--secondary);
+.rate-display {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
 }
+
+.rate-type {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rate-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.buy-rate { color: var(--buy-color); }
+.sell-rate { color: var(--sell-color); }
 
 .admin-panel {
     background: #fff;
@@ -161,4 +178,18 @@ input:focus, select:focus {
     color: #e74c3c;
     margin-top: 0.5rem;
     font-size: 0.9rem;
+}
+
+.rate-control-group {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.rate-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
 }

@@ -1,13 +1,42 @@
-// Initialize currencies with default rates
+// Initialize currencies with buy/sell rates
 let rates = {
-    "USDT": { rate: 15.4, symbol: "₮", icon: "fa-coins" },
-    "USD": { rate: 15.3, symbol: "$", icon: "fa-dollar-sign" },
-    "EUR": { rate: 16.8, symbol: "€", icon: "fa-euro-sign" }
+    "USDT": { 
+        buyRate: 15.2, 
+        sellRate: 15.4,
+        symbol: "₮",
+        icon: "fa-coins"
+    },
+    "USD": { 
+        buyRate: 15.0,
+        sellRate: 15.3,
+        symbol: "$",
+        icon: "fa-dollar-sign"
+    },
+    "EUR": {
+        buyRate: 16.5,
+        sellRate: 16.8,
+        symbol: "€",
+        icon: "fa-euro-sign"
+    }
 };
 
 // Load rates from localStorage
 if(localStorage.getItem('currencyRates')) {
-    rates = JSON.parse(localStorage.getItem('currencyRates'));
+    const storedRates = JSON.parse(localStorage.getItem('currencyRates'));
+    // Migration for existing users
+    if(storedRates.USDT && !storedRates.USDT.buyRate) {
+        rates = Object.keys(storedRates).reduce((acc, currency) => {
+            acc[currency] = {
+                buyRate: storedRates[currency].rate * 0.98,
+                sellRate: storedRates[currency].rate,
+                symbol: storedRates[currency].symbol,
+                icon: storedRates[currency].icon
+            };
+            return acc;
+        }, {});
+    } else {
+        rates = storedRates;
+    }
 }
 
 // Initialize when DOM is loaded
@@ -31,7 +60,16 @@ function initCurrencyList() {
                 <i class="fas ${data.icon} fa-2x" style="color: var(--secondary);"></i>
                 <div>
                     <h3>${currency}</h3>
-                    <p>${data.symbol}1 = MVR<span class="currency-rate">${data.rate.toFixed(4)}</span></p>
+                    <div class="rate-display">
+                        <div class="rate-type">
+                            <span class="rate-label">Buy:</span>
+                            <span class="currency-rate buy-rate">${data.buyRate.toFixed(4)}</span>
+                        </div>
+                        <div class="rate-type">
+                            <span class="rate-label">Sell:</span>
+                            <span class="currency-rate sell-rate">${data.sellRate.toFixed(4)}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
@@ -55,9 +93,9 @@ function initCurrencySelect() {
 function calculateMvrCost() {
     const foreignAmount = parseFloat(document.getElementById('foreignAmount').value) || 0;
     const selectedCurrency = document.getElementById('currencySelect').value;
-    const rate = rates[selectedCurrency].rate;
+    const buyRate = rates[selectedCurrency].buyRate;
     
-    const mvrCost = foreignAmount * rate;
+    const mvrCost = foreignAmount * buyRate;
     document.getElementById('mvrResult').textContent = mvrCost.toLocaleString('en-US', {
         style: 'currency',
         currency: 'MVR',
@@ -70,9 +108,10 @@ function calculateConversions() {
     const mvrAmount = parseFloat(document.getElementById('amount').value) || 0;
     
     document.querySelectorAll('.currency-item').forEach(item => {
-        const rate = parseFloat(item.querySelector('.currency-rate').textContent);
+        const currency = item.querySelector('h3').textContent;
+        const sellRate = rates[currency].sellRate;
         const resultElement = item.querySelector('.conversion-result');
-        resultElement.textContent = (mvrAmount / rate).toLocaleString('en-US', {
+        resultElement.textContent = (mvrAmount / sellRate).toLocaleString('en-US', {
             maximumFractionDigits: 4
         });
     });
@@ -115,17 +154,24 @@ function showRateControls() {
     
     Object.entries(rates).forEach(([currency, data]) => {
         controls.innerHTML += `
-            <div class="input-group" style="margin: 1rem 0;">
-                <div style="flex: 1;">
-                    <label>${currency} Rate (MVR)</label>
-                    <input type="number" 
-                           step="0.0001"
-                           id="edit_${currency}"
-                           value="${data.rate.toFixed(4)}"
-                           style="width: 100%;">
+            <div class="rate-control-group">
+                <h4>${currency} Rates</h4>
+                <div class="rate-inputs">
+                    <div>
+                        <label>Buy Rate (MVR)</label>
+                        <input type="number" step="0.0001"
+                               id="buy_${currency}"
+                               value="${data.buyRate.toFixed(4)}">
+                    </div>
+                    <div>
+                        <label>Sell Rate (MVR)</label>
+                        <input type="number" step="0.0001"
+                               id="sell_${currency}"
+                               value="${data.sellRate.toFixed(4)}">
+                    </div>
                 </div>
                 <button class="contact-button" 
-                        onclick="updateRate('${currency}')"
+                        onclick="updateRates('${currency}')"
                         style="background: var(--secondary);">
                     <i class="fas fa-save"></i> Update
                 </button>
@@ -134,12 +180,10 @@ function showRateControls() {
     });
 }
 
-function updateRate(currency) {
-    const newRate = parseFloat(document.getElementById(`edit_${currency}`).value);
-    rates[currency].rate = newRate;
+function updateRates(currency) {
+    rates[currency].buyRate = parseFloat(document.getElementById(`buy_${currency}`).value);
+    rates[currency].sellRate = parseFloat(document.getElementById(`sell_${currency}`).value);
     localStorage.setItem('currencyRates', JSON.stringify(rates));
-    localStorage.setItem('lastUpdated', new Date().toISOString());
-    
     initCurrencyList();
     calculateConversions();
     updateLastUpdated();
