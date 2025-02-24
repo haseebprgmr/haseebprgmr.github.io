@@ -62,12 +62,14 @@ function initCurrencyList() {
                     <h3>${currency}</h3>
                     <div class="rate-display">
                         <div class="rate-type">
-                            <span class="rate-label">Buy:</span>
+                            <span class="rate-label">We Buy:</span>
                             <span class="currency-rate buy-rate">${data.buyRate.toFixed(4)}</span>
+                            <span class="rate-explanation">(You Sell)</span>
                         </div>
                         <div class="rate-type">
-                            <span class="rate-label">Sell:</span>
+                            <span class="rate-label">We Sell:</span>
                             <span class="currency-rate sell-rate">${data.sellRate.toFixed(4)}</span>
+                            <span class="rate-explanation">(You Buy)</span>
                         </div>
                     </div>
                 </div>
@@ -93,10 +95,10 @@ function initCurrencySelect() {
 function calculateMvrCost() {
     const foreignAmount = parseFloat(document.getElementById('foreignAmount').value) || 0;
     const selectedCurrency = document.getElementById('currencySelect').value;
-    const buyRate = rates[selectedCurrency].buyRate;
     
-    const mvrCost = foreignAmount * buyRate;
-    document.getElementById('mvrResult').textContent = mvrCost.toLocaleString('en-US', {
+    // When users SELL foreign currency to you (you BUY), use buyRate
+    const mvrReceived = foreignAmount * rates[selectedCurrency].buyRate;
+    document.getElementById('mvrResult').textContent = mvrReceived.toLocaleString('en-US', {
         style: 'currency',
         currency: 'MVR',
         minimumFractionDigits: 2,
@@ -107,11 +109,12 @@ function calculateMvrCost() {
 function calculateConversions() {
     const mvrAmount = parseFloat(document.getElementById('amount').value) || 0;
     
+    // When users BUY foreign currency from you (you SELL), use sellRate
     document.querySelectorAll('.currency-item').forEach(item => {
         const currency = item.querySelector('h3').textContent;
-        const sellRate = rates[currency].sellRate;
+        const foreignReceived = mvrAmount / rates[currency].sellRate;
         const resultElement = item.querySelector('.conversion-result');
-        resultElement.textContent = (mvrAmount / sellRate).toLocaleString('en-US', {
+        resultElement.textContent = foreignReceived.toLocaleString('en-US', {
             maximumFractionDigits: 4
         });
     });
@@ -161,13 +164,16 @@ function showRateControls() {
                         <label>Buy Rate (MVR)</label>
                         <input type="number" step="0.0001"
                                id="buy_${currency}"
-                               value="${data.buyRate.toFixed(4)}">
+                               value="${data.buyRate.toFixed(4)}"
+                               min="0.0001"
+                               max="${data.sellRate - 0.0001}">
                     </div>
                     <div>
                         <label>Sell Rate (MVR)</label>
                         <input type="number" step="0.0001"
                                id="sell_${currency}"
-                               value="${data.sellRate.toFixed(4)}">
+                               value="${data.sellRate.toFixed(4)}"
+                               min="${data.buyRate + 0.0001}">
                     </div>
                 </div>
                 <button class="contact-button" 
@@ -181,8 +187,16 @@ function showRateControls() {
 }
 
 function updateRates(currency) {
-    rates[currency].buyRate = parseFloat(document.getElementById(`buy_${currency}`).value);
-    rates[currency].sellRate = parseFloat(document.getElementById(`sell_${currency}`).value);
+    const buyRate = parseFloat(document.getElementById(`buy_${currency}`).value);
+    const sellRate = parseFloat(document.getElementById(`sell_${currency}`).value);
+    
+    if (buyRate >= sellRate) {
+        alert("Error: Buy rate must be lower than sell rate");
+        return;
+    }
+    
+    rates[currency].buyRate = buyRate;
+    rates[currency].sellRate = sellRate;
     localStorage.setItem('currencyRates', JSON.stringify(rates));
     initCurrencyList();
     calculateConversions();

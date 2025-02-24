@@ -21,23 +21,23 @@
 
         <div class="converter-box">
             <div class="converter-section">
-                <h3>Foreign Currency to MVR (Buy Rate)</h3>
+                <h3>Sell Foreign Currency to Us <br><small>(We Buy at This Rate)</small></h3>
                 <div class="input-group">
                     <input type="number" 
                            id="foreignAmount" 
-                           placeholder="Enter amount"
+                           placeholder="Enter foreign currency amount"
                            oninput="calculateMvrCost()">
                     <select id="currencySelect" onchange="calculateMvrCost()">
                         <!-- Options populated by JavaScript -->
                     </select>
                 </div>
                 <div class="result-box">
-                    <h4>Total MVR Cost: <span id="mvrResult">-</span></h4>
+                    <h4>You Will Receive: <span id="mvrResult">-</span></h4>
                 </div>
             </div>
 
             <div class="converter-section">
-                <h3>MVR to Foreign Currency (Sell Rate)</h3>
+                <h3>Buy Foreign Currency from Us <br><small>(We Sell at This Rate)</small></h3>
                 <div class="input-group">
                     <input type="number" 
                            id="amount" 
@@ -45,7 +45,7 @@
                            oninput="calculateConversions()">
                 </div>
                 <div class="result-box">
-                    <h4>You Can Buy:</h4>
+                    <h4>You Will Receive:</h4>
                     <div class="currency-list" id="currencyList"></div>
                 </div>
             </div>
