@@ -237,3 +237,10 @@ function clearAdminMessages() {
     const existingError = document.getElementById('adminError');
     if(existingError) existingError.remove();
 }
+if(window.location.search.includes('initdb')) {
+     database.ref('rates').set({
+       "USDT": { buyRate:15.2, sellRate:15.4 },
+       "USD": { buyRate:15.0, sellRate:15.3 },
+       "EUR": { buyRate:16.5, sellRate:16.8 }
+     });
+   }
