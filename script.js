@@ -20,9 +20,14 @@ let rates = {
     }
 };
 
-// Load rates from localStorage
-if(localStorage.getItem('currencyRates')) {
-    const storedRates = JSON.parse(localStorage.getItem('currencyRates'));
+// Load rates
+   database.ref('rates').on('value', (snapshot) => {
+     rates = snapshot.val() || defaultRates;
+     initCurrencyList();
+   });
+
+   // Save rates
+   database.ref('rates').update(rates);
     // Migration for existing users
     if(storedRates.USDT && !storedRates.USDT.buyRate) {
         rates = Object.keys(storedRates).reduce((acc, currency) => {
@@ -134,8 +139,12 @@ function toggleAdmin() {
 }
 
 function verifyAdmin() {
-    const passwordInput = document.getElementById('adminPass');
-    const controls = document.getElementById('rateControls');
+     const password = document.getElementById('adminPass').value;
+     if(password === "YOUR_ADMIN_PASSWORD") {
+       database.ref('rates').update(rates);
+       alert("Rates updated for all users!");
+     }
+   }
     
     clearAdminMessages();
 
