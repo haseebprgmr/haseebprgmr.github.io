@@ -121,7 +121,7 @@ function calculateConversions() {
 }
 
 // Admin functionality
-const ADMIN_PASSWORD = "secure123";
+const ADMIN_PASSWORD = "Bestexchange123";
 let adminMode = false;
 
 function toggleAdmin() {
