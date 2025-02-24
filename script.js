@@ -13,7 +13,10 @@ if(localStorage.getItem('currencyRates')) {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initCurrencyList();
+    initCurrencySelect();
     calculateConversions();
+    calculateMvrCost();
+    updateLastUpdated();
 });
 
 function initCurrencyList() {
@@ -39,19 +42,44 @@ function initCurrencyList() {
     });
 }
 
+function initCurrencySelect() {
+    const select = document.getElementById('currencySelect');
+    Object.keys(rates).forEach(currency => {
+        const option = document.createElement('option');
+        option.value = currency;
+        option.textContent = currency;
+        select.appendChild(option);
+    });
+}
+
+function calculateMvrCost() {
+    const foreignAmount = parseFloat(document.getElementById('foreignAmount').value) || 0;
+    const selectedCurrency = document.getElementById('currencySelect').value;
+    const rate = rates[selectedCurrency].rate;
+    
+    const mvrCost = foreignAmount * rate;
+    document.getElementById('mvrResult').textContent = mvrCost.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'MVR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
 function calculateConversions() {
-    const amount = parseFloat(document.getElementById('amount').value) || 0;
+    const mvrAmount = parseFloat(document.getElementById('amount').value) || 0;
+    
     document.querySelectorAll('.currency-item').forEach(item => {
         const rate = parseFloat(item.querySelector('.currency-rate').textContent);
         const resultElement = item.querySelector('.conversion-result');
-        resultElement.textContent = (amount / rate).toFixed(4);
-        resultElement.style.color = 'var(--secondary)';
-        resultElement.style.fontWeight = '600';
+        resultElement.textContent = (mvrAmount / rate).toLocaleString('en-US', {
+            maximumFractionDigits: 4
+        });
     });
 }
 
 // Admin functionality
-const ADMIN_PASSWORD = "Password123";
+const ADMIN_PASSWORD = "secure123";
 let adminMode = false;
 
 function toggleAdmin() {
@@ -110,8 +138,24 @@ function updateRate(currency) {
     const newRate = parseFloat(document.getElementById(`edit_${currency}`).value);
     rates[currency].rate = newRate;
     localStorage.setItem('currencyRates', JSON.stringify(rates));
+    localStorage.setItem('lastUpdated', new Date().toISOString());
+    
     initCurrencyList();
     calculateConversions();
+    updateLastUpdated();
+}
+
+function updateLastUpdated() {
+    const lastUpdated = localStorage.getItem('lastUpdated') || new Date().toISOString();
+    const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    };
+    document.getElementById('lastUpdated').textContent = `Rates updated: ${new Date(lastUpdated).toLocaleString('en-US', options)}`;
 }
 
 function showError(message) {

@@ -29,8 +29,25 @@ body {
 
 h1 {
     color: var(--secondary);
-    margin: 0;
+    margin: 0 0 1rem 0;
     font-size: 2.5rem;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.last-updated {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    background: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .converter-box {
@@ -41,24 +58,40 @@ h1 {
     margin-bottom: 2rem;
 }
 
+.converter-section {
+    margin-bottom: 2rem;
+}
+
+.converter-section h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
 .input-group {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
-input {
-    flex: 1;
+input, select {
     padding: 1rem;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
-    font-size: 1.1rem;
-    transition: border-color 0.3s ease;
+    font-size: 1rem;
+    background: white;
 }
 
-input:focus {
+input:focus, select:focus {
     outline: none;
     border-color: var(--secondary);
+}
+
+.result-box {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-top: 1rem;
 }
 
 .currency-list {
@@ -70,10 +103,10 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 1rem;
     background: white;
-    padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .currency-info {
@@ -102,13 +135,6 @@ input:focus {
     border-top: 1px solid #eee;
 }
 
-.contact-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin: 1.5rem 0;
-}
-
 .contact-button {
     padding: 0.8rem 1.5rem;
     border-radius: 8px;
@@ -118,6 +144,8 @@ input:focus {
     text-decoration: none;
     color: white;
     transition: transform 0.2s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .contact-button:hover {
