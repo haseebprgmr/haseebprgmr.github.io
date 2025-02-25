@@ -126,37 +126,25 @@ function calculateConversions() {
 }
 
 // Admin functionality
-const ADMIN_PASSWORD = "Bestexchange123";
-let adminMode = false;
-
-function toggleAdmin() {
-    const adminPanel = document.getElementById('adminPanel');
-    adminPanel.classList.toggle('hidden');
-    clearAdminMessages();
-    if(!adminPanel.classList.contains('hidden')) {
-        document.getElementById('adminPass').focus();
-    }
-}
+const ADMIN_PASSWORD = "your-secure-password"; // Change this!
 
 function verifyAdmin() {
-     const password = document.getElementById('adminPass').value;
-     if(password === "YOUR_ADMIN_PASSWORD") {
-       database.ref('rates').update(rates);
-       alert("Rates updated for all users!");
-     }
-   }
+    const password = document.getElementById('adminPass').value;
+    const errorDiv = document.getElementById('adminError');
     
-    clearAdminMessages();
-
-    if(passwordInput.value === ADMIN_PASSWORD) {
-        controls.classList.remove('hidden');
-        showRateControls();
-        adminMode = true;
-        passwordInput.value = '';
+    // Clear previous errors
+    errorDiv.textContent = '';
+    
+    if(password === ADMIN_PASSWORD) {
+        // Show rate controls
+        document.getElementById('rateControls').classList.remove('hidden');
+        // Hide login panel
+        document.getElementById('adminPanel').classList.add('hidden');
     } else {
-        showError('Incorrect password. Please try again.');
-        passwordInput.value = '';
-        passwordInput.focus();
+        // Show error message
+        errorDiv.textContent = 'Incorrect password. Please try again.';
+        // Clear password field
+        document.getElementById('adminPass').value = '';
     }
 }
 
