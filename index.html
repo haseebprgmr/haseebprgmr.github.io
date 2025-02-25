@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-   <script src="firebase-config.js"></script>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +6,9 @@
     <title>Maldives Currency Exchange</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 </head>
 <body>
     <div class="container">
@@ -63,7 +63,8 @@
             <button class="contact-button" onclick="verifyAdmin()">
                 <i class="fas fa-unlock"></i> Authenticate
             </button>
-            <div id="adminerror" class="error-message"></div>
+            <div id="adminError" class="error-message"></div>
+            <div id="rateControls" class="hidden"></div>
         </div>
 
         <div class="contacts">
