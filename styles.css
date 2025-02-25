@@ -191,6 +191,11 @@ input:focus, select:focus {
     font-size: 0.9rem;
 }
 
+.input-field:invalid {
+    border-color: #e74c3c;
+    background-color: #fdedec;
+}
+
 .rate-control-group {
     background: #f8f9fa;
     padding: 1rem;
