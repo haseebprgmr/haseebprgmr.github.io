@@ -3,87 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maldives Currency Exchange</title>
+    <title>Currency Exchange</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Maldives Currency Exchange</h1>
-            <div class="status-bar">
-                <p class="last-updated" id="lastUpdated">Rates updated: Loading...</p>
-                <button class="contact-button" onclick="toggleAdmin()">
-                    <i class="fas fa-lock"></i> Admin Login
-                </button>
-            </div>
+        <h1>Currency Exchange</h1>
+        
+        <!-- Rate Display -->
+        <div class="rates">
+            <h2>Current Rates</h2>
+            <div id="rateList"></div>
         </div>
 
-        <div class="converter-box">
-            <div class="converter-section">
-                <h3>Sell Foreign Currency to Us <br><small>(We Buy at This Rate)</small></h3>
-                <div class="input-group">
-                    <input type="number" 
-                           id="foreignAmount" 
-                           placeholder="Enter foreign currency amount"
-                           oninput="calculateMvrCost()">
-                    <select id="currencySelect" onchange="calculateMvrCost()">
-                        <!-- Options populated by JavaScript -->
-                    </select>
-                </div>
-                <div class="result-box">
-                    <h4>You Will Receive: <span id="mvrResult">-</span></h4>
-                </div>
-            </div>
-
-            <div class="converter-section">
-                <h3>Buy Foreign Currency from Us <br><small>(We Sell at This Rate)</small></h3>
-                <div class="input-group">
-                    <input type="number" 
-                           id="amount" 
-                           placeholder="Enter MVR amount"
-                           oninput="calculateConversions()">
-                </div>
-                <div class="result-box">
-                    <h4>You Will Receive:</h4>
-                    <div class="currency-list" id="currencyList"></div>
-                </div>
-            </div>
+        <!-- Admin Login -->
+        <div id="adminPanel">
+            <h2>Admin Login</h2>
+            <input type="password" id="adminPass" placeholder="Enter password">
+            <button onclick="verifyAdmin()">Login</button>
+            <div id="adminError" class="error"></div>
         </div>
 
-        <div id="adminPanel" class="admin-panel hidden">
-            <h2>Admin Dashboard</h2>
-            <input type="password" 
-                   id="adminPass" 
-                   placeholder="Enter admin password"
-                   class="input-field">
-            <button class="contact-button" onclick="verifyAdmin()">
-                <i class="fas fa-unlock"></i> Authenticate
-            </button>
-            <div id="adminError" class="error-message"></div>
-            <div id="rateControls" class="hidden"></div>
+        <!-- Rate Update Form -->
+        <div id="rateControls" class="hidden">
+            <h2>Update Rates</h2>
+            <div id="rateForm"></div>
         </div>
 
-        <div class="contacts">
-            <h3>Contact Us for Exchange</h3>
-            <div class="contact-buttons">
-                <a href="viber://add?number=123456789" class="contact-button viber">
-                    <i class="fab fa-viber"></i> Viber
-                </a>
-                <a href="https://wa.me/123456789" class="contact-button whatsapp">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="https://t.me/username" class="contact-button telegram">
-                    <i class="fab fa-telegram-plane"></i> Telegram
-                </a>
-            </div>
-            <p><i class="fas fa-phone"></i> +960 123-4567</p>
+        <!-- Converter -->
+        <div class="converter">
+            <h2>Currency Converter</h2>
+            <input type="number" id="amount" placeholder="Enter amount">
+            <select id="currencySelect">
+                <option value="USDT">USDT</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+            <button onclick="calculate()">Calculate</button>
+            <div id="result"></div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
