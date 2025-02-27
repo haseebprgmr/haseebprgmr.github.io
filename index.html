@@ -41,16 +41,30 @@
         <!-- Converter -->
         <section class="converter">
             <h2>Currency Converter</h2>
+            
+            <!-- Foreign Currency to MVR -->
             <div class="input-group">
-                <input type="number" id="amount" placeholder="Enter foreign currency amount">
-                <select id="currencySelect">
+                <input type="number" id="foreignAmount" placeholder="Enter foreign currency amount">
+                <select id="foreignCurrencySelect">
                     <option value="USDT">USDT</option>
                     <option value="USD">USD</option>
                     <option value="EUR">EUR</option>
                 </select>
-                <button class="btn" onclick="calculate()">Calculate</button>
+                <button class="btn" onclick="calculateForeignToMVR()">Calculate</button>
             </div>
-            <div id="result" class="result-box"></div>
+            <div id="foreignToMVRResult" class="result-box"></div>
+
+            <!-- MVR to Foreign Currency -->
+            <div class="input-group">
+                <input type="number" id="mvrAmount" placeholder="Enter MVR amount">
+                <select id="mvrCurrencySelect">
+                    <option value="USDT">USDT</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+                <button class="btn" onclick="calculateMVRToForeign()">Calculate</button>
+            </div>
+            <div id="mvrToForeignResult" class="result-box"></div>
         </section>
     </div>
 
