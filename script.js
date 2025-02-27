@@ -155,16 +155,12 @@ function calculateMVRToForeign() {
         return;
     }
 
-    // Buy: User sells MVR to you (you buy foreign currency)
-    const foreignReceived = amount / rate.sellRate;
-
-    // Sell: User buys foreign currency from you (you sell)
-    const foreignNeeded = amount / rate.buyRate;
+    // Calculate how much foreign currency the user can buy with their MVR
+    const foreignAmount = amount / rate.sellRate;
 
     // Display result
     document.getElementById('mvrToForeignResult').innerHTML = `
-        <p>If you sell ${amount} MVR, you will receive: <strong>${foreignReceived.toFixed(2)} ${currency}</strong></p>
-        <p>If you buy ${amount} MVR worth of ${currency}, you will pay: <strong>${foreignNeeded.toFixed(2)} ${currency}</strong></p>
+        <p>With ${amount} MVR, you can buy: <strong>${foreignAmount.toFixed(2)} ${currency}</strong></p>
     `;
 }
 
