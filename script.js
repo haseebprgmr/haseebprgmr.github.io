@@ -4,7 +4,7 @@ const JSONBIN_BIN_ID = '67bfbf75acd3cb34a8f1b832'; // Your Bin ID
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
 // Admin password (use environment variables in production)
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_PASSWORD = "password123";
 
 // Exchange rates (fallback if JSONBin fails)
 let rates = {};
