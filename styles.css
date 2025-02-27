@@ -1,211 +1,49 @@
-:root {
-    --primary: #2c3e50;
-    --secondary: #3498db;
-    --buy-color: #27ae60;
-    --sell-color: #c0392b;
-    --background: #f8f9fa;
-}
-
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 2rem;
-    color: var(--primary);
+    padding: 20px;
+    background: #f4f4f4;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    padding: 2rem;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-h1 {
-    color: var(--secondary);
-    margin: 0 0 1rem 0;
-    font-size: 2.5rem;
-}
-
-.status-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.last-updated {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #7f8c8d;
-    background: #f8f9fa;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.converter-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    margin-bottom: 2rem;
-}
-
-.converter-section {
-    margin-bottom: 2rem;
-}
-
-.converter-section h3 {
-    color: var(--primary);
-    margin-bottom: 1rem;
-}
-
-small {
-    font-size: 0.8em;
-    color: #7f8c8d;
-    font-weight: normal;
-}
-
-.input-group {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-input, select {
-    padding: 1rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1rem;
-    background: white;
-}
-
-input:focus, select:focus {
-    outline: none;
-    border-color: var(--secondary);
-}
-
-.result-box {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    margin-top: 1rem;
-}
-
-.currency-list {
-    display: grid;
-    gap: 1rem;
-}
-
-.currency-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.currency-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.rate-display {
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
-}
-
-.rate-type {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.rate-label {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-}
-
-.rate-explanation {
-    font-size: 0.8em;
-    color: #95a5a6;
-}
-
-.buy-rate { color: var(--buy-color); }
-.sell-rate { color: var(--sell-color); }
-
-.admin-panel {
     background: #fff;
-    padding: 2rem;
-    border-radius: 12px;
-    margin-top: 2rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-.contacts {
-    text-align: center;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
-}
-
-.contact-button {
-    padding: 0.8rem 1.5rem;
+    padding: 20px;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    color: white;
-    transition: transform 0.2s ease;
-    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.rates, .converter {
+    margin-bottom: 20px;
+}
+
+input, select, button {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background: #28a745;
+    color: #fff;
     cursor: pointer;
 }
 
-.contact-button:hover {
-    transform: translateY(-2px);
+button:hover {
+    background: #218838;
 }
 
-.viber { background: #7360F2; }
-.whatsapp { background: #25D366; }
-.telegram { background: #0088cc; }
-
-.hidden { display: none; }
-.error-message {
-    color: #e74c3c;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
+.hidden {
+    display: none;
 }
 
-.rate-control-group {
-    background: #f8f9fa;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.rate-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin: 1rem 0;
-}
-
-input:invalid {
-    border-color: #e74c3c;
-    background-color: #fdedec;
+.error {
+    color: #dc3545;
+    margin-top: 10px;
 }
