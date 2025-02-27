@@ -15,6 +15,13 @@ async function loadRates() {
         displayRates();
     } catch (error) {
         console.error('Error loading rates:', error);
+        // Fallback to default rates if JSONBin fails
+        rates = {
+            "USDT": { buyRate: 15.2, sellRate: 15.4 },
+            "USD": { buyRate: 15.0, sellRate: 15.3 },
+            "EUR": { buyRate: 16.5, sellRate: 16.8 }
+        };
+        displayRates();
     }
 }
 
@@ -89,12 +96,15 @@ function calculate() {
         return;
     }
 
-    const buyAmount = amount * rate.buyRate;
-    const sellAmount = amount / rate.sellRate;
+    // Buy: User sells foreign currency to you (you buy)
+    const mvrReceived = amount * rate.buyRate;
+
+    // Sell: User buys foreign currency from you (you sell)
+    const mvrNeeded = amount * rate.sellRate;
 
     document.getElementById('result').innerHTML = `
-        <p>Buy: ${buyAmount.toFixed(2)} MVR</p>
-        <p>Sell: ${sellAmount.toFixed(2)} ${currency}</p>
+        <p>If you sell ${amount} ${currency}, you will receive: <strong>${mvrReceived.toFixed(2)} MVR</strong></p>
+        <p>If you buy ${amount} ${currency}, you will pay: <strong>${mvrNeeded.toFixed(2)} MVR</strong></p>
     `;
 }
 
