@@ -118,15 +118,15 @@ async function updateRate(currency) {
     }
 }
 
-// Currency converter
-function calculate() {
-    const amount = parseFloat(document.getElementById('amount').value);
-    const currency = document.getElementById('currencySelect').value;
+// Foreign Currency to MVR
+function calculateForeignToMVR() {
+    const amount = parseFloat(document.getElementById('foreignAmount').value);
+    const currency = document.getElementById('foreignCurrencySelect').value;
     const rate = rates[currency];
 
     // Input validation
     if (!rate || isNaN(amount)) {
-        document.getElementById('result').textContent = 'Invalid input!';
+        document.getElementById('foreignToMVRResult').textContent = 'Invalid input!';
         return;
     }
 
@@ -137,9 +137,34 @@ function calculate() {
     const mvrNeeded = amount * rate.sellRate;
 
     // Display result
-    document.getElementById('result').innerHTML = `
+    document.getElementById('foreignToMVRResult').innerHTML = `
         <p>If you sell ${amount} ${currency}, you will receive: <strong>${mvrReceived.toFixed(2)} MVR</strong></p>
         <p>If you buy ${amount} ${currency}, you will pay: <strong>${mvrNeeded.toFixed(2)} MVR</strong></p>
+    `;
+}
+
+// MVR to Foreign Currency
+function calculateMVRToForeign() {
+    const amount = parseFloat(document.getElementById('mvrAmount').value);
+    const currency = document.getElementById('mvrCurrencySelect').value;
+    const rate = rates[currency];
+
+    // Input validation
+    if (!rate || isNaN(amount)) {
+        document.getElementById('mvrToForeignResult').textContent = 'Invalid input!';
+        return;
+    }
+
+    // Buy: User sells MVR to you (you buy foreign currency)
+    const foreignReceived = amount / rate.sellRate;
+
+    // Sell: User buys foreign currency from you (you sell)
+    const foreignNeeded = amount / rate.buyRate;
+
+    // Display result
+    document.getElementById('mvrToForeignResult').innerHTML = `
+        <p>If you sell ${amount} MVR, you will receive: <strong>${foreignReceived.toFixed(2)} ${currency}</strong></p>
+        <p>If you buy ${amount} MVR worth of ${currency}, you will pay: <strong>${foreignNeeded.toFixed(2)} ${currency}</strong></p>
     `;
 }
 
