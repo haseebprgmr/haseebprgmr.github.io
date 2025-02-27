@@ -1,6 +1,6 @@
 // JSONBin configuration
 const JSONBIN_API_KEY = '$2a$10$NclxDQUlXF9OtuxdQxDxVug.8VmB2C0VFq1qRRIHOgR4k.GYxKB/O'; // Your API key
-const JSONBIN_BIN_ID = '67bfbf75acd3cb34a8f1b832'; // Your Bin ID
+const JSONBIN_BIN_ID = '67c07ab6e41b4d34e49dd8a9'; // Your Bin ID
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
 // Admin password (use environment variables in production)
