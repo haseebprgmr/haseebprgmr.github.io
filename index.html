@@ -5,44 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Exchange</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Currency Exchange</h1>
-        
+        <!-- Header -->
+        <header>
+            <h1>Currency Exchange</h1>
+            <button class="admin-btn" onclick="toggleAdmin()">
+                <i class="fas fa-lock"></i> Admin Login
+            </button>
+        </header>
+
         <!-- Rate Display -->
-        <div class="rates">
+        <section class="rates">
             <h2>Current Rates</h2>
-            <div id="rateList"></div>
-        </div>
+            <div id="rateList" class="rate-grid"></div>
+        </section>
 
         <!-- Admin Login -->
-        <div id="adminPanel">
+        <div id="adminPanel" class="hidden">
             <h2>Admin Login</h2>
             <input type="password" id="adminPass" placeholder="Enter password">
-            <button onclick="verifyAdmin()">Login</button>
+            <button class="btn" onclick="verifyAdmin()">Login</button>
             <div id="adminError" class="error"></div>
         </div>
 
         <!-- Rate Update Form -->
         <div id="rateControls" class="hidden">
             <h2>Update Rates</h2>
-            <div id="rateForm"></div>
+            <div id="rateForm" class="rate-form"></div>
         </div>
 
         <!-- Converter -->
-        <div class="converter">
+        <section class="converter">
             <h2>Currency Converter</h2>
-            <input type="number" id="amount" placeholder="Enter amount">
-            <select id="currencySelect">
-                <option value="USDT">USDT</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-            </select>
-            <button onclick="calculate()">Calculate</button>
-            <div id="result"></div>
-        </div>
+            <div class="input-group">
+                <input type="number" id="amount" placeholder="Enter amount">
+                <select id="currencySelect">
+                    <option value="USDT">USDT</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+                <button class="btn" onclick="calculate()">Calculate</button>
+            </div>
+            <div id="result" class="result-box"></div>
+        </section>
     </div>
 
     <script src="script.js"></script>
