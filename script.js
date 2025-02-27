@@ -1,6 +1,6 @@
 // JSONBin configuration
-const JSONBIN_API_KEY = '$2a$10$ISnzYBxkpDNeersZBo0mVe5v/iOr89sUQyl.zGdj3v.pGlKBJLYgu'; // Replace with your API key
-const JSONBIN_BIN_ID = '67bfb39fe41b4d34e49d819d'; // Replace with your bin ID
+const JSONBIN_API_KEY = '$2a$10$ISnzYBxkpDNeersZBo0mVe5v/iOr89sUQyl.zGdj3v.pGlKBJLYgu'; 
+const JSONBIN_BIN_ID = '67bfb39fe41b4d34e49d819d'; 
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
 // Initialize rates
